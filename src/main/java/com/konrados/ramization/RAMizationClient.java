@@ -1,0 +1,28 @@
+package com.konrados.ramization;
+
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+
+@Mod(value = RAMization.MODID, dist = Dist.CLIENT)
+@EventBusSubscriber(modid = RAMization.MODID, value = Dist.CLIENT)
+public class RAMizationClient {
+
+    public RAMizationClient(ModContainer container) {
+        
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    }
+
+    @SubscribeEvent
+    static void onClientSetup(FMLClientSetupEvent event) {
+        RAMization.LOGGER.info("[RAMization] Client-side features loaded (texture cache trimming active).");
+    }
+}
+
+
+

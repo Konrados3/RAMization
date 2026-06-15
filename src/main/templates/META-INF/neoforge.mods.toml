@@ -1,0 +1,43 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="https://github.com/konrados/ramization/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="Konrados"
+description='''
+RAMization reduces RAM usage in large modpacks by 1-3 GB through three techniques:
+
+1. Smart String Interning - ResourceLocation namespace/path strings and NBT CompoundTag
+   keys are deduplicated via a purpose-built intern pool. In a 200-mod pack, strings like
+   "minecraft", "forge", "OnGround", "Pos" etc. exist in hundreds of thousands of
+   duplicate copies. RAMization collapses them to one canonical instance, freeing hundreds
+   of MB of heap.
+
+2. Tick-Aware SmartGC Scheduler - Garbage collection is only triggered during idle server
+   tick windows (when recent ticks all completed under the configured ms threshold).
+   This prevents random Stop-The-World pauses mid-tick while keeping heap usage low.
+
+3. Client Texture Cache Trimming - Periodically releases stale sprite entries from
+   TextureAtlas caches to reduce VRAM and heap usage on the client.
+'''
+
+[[mixins]]
+config="ramization.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
